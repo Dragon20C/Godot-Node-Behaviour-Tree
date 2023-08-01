@@ -1,4 +1,4 @@
-class_name ChaseBT extends NodeBT
+class_name ChaseAction extends NodeBT
 
 @export var NPC : CharacterBody2D
 @export var Speed : int

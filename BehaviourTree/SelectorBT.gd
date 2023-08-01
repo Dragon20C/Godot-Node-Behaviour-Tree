@@ -5,6 +5,8 @@ var SelectorChildren : Array
 
 func _ready() -> void:
 	SelectorChildren = get_children()
+	SelectorChildren.sort_custom(ComparePriority)
+	print(SelectorChildren)
 	
 func Evaluate(delta: float) -> NodeState:
 	for child in SelectorChildren:
@@ -21,3 +23,7 @@ func Evaluate(delta: float) -> NodeState:
 				continue
 				
 	return NodeState.FAILURE
+
+func ComparePriority(a: Node, b: Node) -> bool:
+	
+	return a.Priority > b.Priority

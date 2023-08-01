@@ -1,47 +1,47 @@
-[gd_scene load_steps=9 format=3 uid="uid://b3lvfv2q76di2"]
+[gd_scene load_steps=9 format=3 uid="uid://cl1ce131i0i4b"]
 
 [ext_resource type="Texture2D" uid="uid://0lkqqr82j3in" path="res://icon.svg" id="1_4yjy8"]
 [ext_resource type="Script" path="res://BehaviourTree/RootBT.gd" id="2_qvyuy"]
 [ext_resource type="Script" path="res://BehaviourTree/SelectorBT.gd" id="3_a4xdw"]
-[ext_resource type="Script" path="res://BehaviourTree/SpecificBehaviour/PatrolBT.gd" id="3_gsk10"]
 [ext_resource type="Script" path="res://BehaviourTree/SequenceBT.gd" id="4_g1rti"]
-[ext_resource type="Script" path="res://BehaviourTree/SpecificBehaviour/ChaseBT.gd" id="5_3gsi8"]
-[ext_resource type="Script" path="res://BehaviourTree/SpecificBehaviour/CanChaseAction.gd" id="5_hbiua"]
+[ext_resource type="Script" path="res://BehaviourTree/SpecificBehaviour/CanChaseCondition.gd" id="5_kkfqi"]
+[ext_resource type="Script" path="res://BehaviourTree/SpecificBehaviour/ChaseAction.gd" id="6_8cn0c"]
+[ext_resource type="Script" path="res://BehaviourTree/SpecificBehaviour/PatrolAction.gd" id="7_jvbg7"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3o861"]
-size = Vector2(65, 65)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6fh2e"]
+size = Vector2(60, 60)
 
 [node name="Enemy" type="CharacterBody2D"]
 
 [node name="Icon" type="Sprite2D" parent="."]
-scale = Vector2(0.507812, 0.507812)
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_4yjy8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, 0.5)
-shape = SubResource("RectangleShape2D_3o861")
+shape = SubResource("RectangleShape2D_6fh2e")
 
-[node name="EnemyBT" type="Node2D" parent="."]
+[node name="RootBT" type="Node2D" parent="."]
 script = ExtResource("2_qvyuy")
 
-[node name="SelectorNode" type="Node2D" parent="EnemyBT"]
+[node name="SelectorBT" type="Node2D" parent="RootBT"]
 script = ExtResource("3_a4xdw")
 
-[node name="SequenceNode" type="Node2D" parent="EnemyBT/SelectorNode"]
+[node name="SequenceBT" type="Node2D" parent="RootBT/SelectorBT"]
 script = ExtResource("4_g1rti")
 
-[node name="CanChase" type="Node2D" parent="EnemyBT/SelectorNode/SequenceNode" node_paths=PackedStringArray("NPC")]
-script = ExtResource("5_hbiua")
+[node name="CanChase" type="Node2D" parent="RootBT/SelectorBT/SequenceBT" node_paths=PackedStringArray("NPC")]
+script = ExtResource("5_kkfqi")
 NPC = NodePath("../../../..")
 MinChaseDistance = 200
 
-[node name="ChaseAction" type="Node2D" parent="EnemyBT/SelectorNode/SequenceNode" node_paths=PackedStringArray("NPC")]
-script = ExtResource("5_3gsi8")
+[node name="ChaseAction" type="Node2D" parent="RootBT/SelectorBT/SequenceBT" node_paths=PackedStringArray("NPC")]
+script = ExtResource("6_8cn0c")
 NPC = NodePath("../../../..")
 Speed = 150
-MaxChaseDistance = 400
+MaxChaseDistance = 250
+MinChaseDistance = 100
 
-[node name="PatrolNode" type="Node2D" parent="EnemyBT/SelectorNode" node_paths=PackedStringArray("NPC")]
-script = ExtResource("3_gsk10")
+[node name="PatrolAction" type="Node2D" parent="RootBT/SelectorBT" node_paths=PackedStringArray("NPC")]
+script = ExtResource("7_jvbg7")
 NPC = NodePath("../../..")
 Speed = 200
