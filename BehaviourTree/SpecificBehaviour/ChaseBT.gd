@@ -7,11 +7,10 @@ class_name ChaseBT extends NodeBT
 
 func Evaluate(delta: float) -> NodeState:
 	var MousePos = get_global_mouse_position()
-	# Move towards the target position
+	
 	NPC.velocity = (MousePos - NPC.position).normalized() * Speed
 	NPC.move_and_slide()
 
-	# Check if the NPC has reached the target position
 	var Distance = NPC.position.distance_to(MousePos)
 	if Distance < 5.0:
 		print("Chase Finished")
@@ -19,5 +18,4 @@ func Evaluate(delta: float) -> NodeState:
 	elif Distance > MaxChaseDistance:
 		return NodeState.FAILURE
 			
-	# Return RUNNING while the patrol is in progress
 	return NodeState.RUNNING

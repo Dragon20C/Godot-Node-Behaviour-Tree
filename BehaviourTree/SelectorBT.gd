@@ -12,16 +12,12 @@ func Evaluate(delta: float) -> NodeState:
 		
 		match childState:
 			NodeState.FAILURE:
-				State = NodeState.FAILURE
 				continue
 			NodeState.SUCCESS:
-				State = NodeState.SUCCESS
-				return State
+				return NodeState.SUCCESS
 			NodeState.RUNNING:
-				State = NodeState.RUNNING
-				return State
+				return NodeState.RUNNING
 			_:
 				continue
 				
-	State = NodeState.FAILURE
-	return State
+	return NodeState.FAILURE

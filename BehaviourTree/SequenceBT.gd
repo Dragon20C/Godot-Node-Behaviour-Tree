@@ -15,10 +15,8 @@ func Evaluate(delta: float) -> NodeState:
 			NodeState.SUCCESS:
 				continue
 			NodeState.RUNNING:
-				return NodeState.RUNNING
+				continue
 			_:
-				# Handle any unexpected NodeState values here.
-				# For example, raise an error or log a message.
 				return NodeState.FAILURE
 
 	return NodeState.SUCCESS
