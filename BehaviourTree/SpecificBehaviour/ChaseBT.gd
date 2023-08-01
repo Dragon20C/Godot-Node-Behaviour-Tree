@@ -4,10 +4,8 @@ class_name ChaseBT extends NodeBT
 @export var Speed : int
 @export var MaxChaseDistance : int
 @export var MinChaseDistance : int
-var TargetPosition : Vector2
 
 func Evaluate(delta: float) -> NodeState:
-	print("Chasing")
 	var MousePos = get_global_mouse_position()
 	# Move towards the target position
 	NPC.velocity = (MousePos - NPC.position).normalized() * Speed
@@ -16,7 +14,6 @@ func Evaluate(delta: float) -> NodeState:
 	# Check if the NPC has reached the target position
 	var Distance = NPC.position.distance_to(MousePos)
 	if Distance < 5.0:
-		NPC.position = TargetPosition
 		print("Chase Finished")
 		return NodeState.SUCCESS
 	elif Distance > MaxChaseDistance:
