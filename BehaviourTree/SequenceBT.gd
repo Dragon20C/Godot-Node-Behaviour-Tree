@@ -17,6 +17,6 @@ func Evaluate(Data : DataTreeClass) -> NodeState:
 			NodeState.RUNNING:
 				return NodeState.RUNNING
 			_:
-				return NodeState.FAILURE
+				return NodeState.SUCCESS
 
 	return NodeState.RUNNING

@@ -14,18 +14,6 @@ size = Vector2(60, 60)
 
 [node name="Enemy" type="CharacterBody2D"]
 
-[node name="SequenceBT" type="Node2D" parent="."]
-script = ExtResource("4_g1rti")
-
-[node name="CanChase" type="Node2D" parent="SequenceBT"]
-script = ExtResource("5_kkfqi")
-MinChaseDistance = 250
-
-[node name="ChaseAction" type="Node2D" parent="SequenceBT"]
-script = ExtResource("6_8cn0c")
-Speed = 150
-MaxChaseDistance = 250
-
 [node name="Icon" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_4yjy8")
@@ -38,6 +26,18 @@ script = ExtResource("2_qvyuy")
 
 [node name="SelectorBT" type="Node2D" parent="RootBT"]
 script = ExtResource("3_a4xdw")
+
+[node name="SequenceBT" type="Node2D" parent="RootBT/SelectorBT"]
+script = ExtResource("4_g1rti")
+
+[node name="CanChase" type="Node2D" parent="RootBT/SelectorBT/SequenceBT"]
+script = ExtResource("5_kkfqi")
+MinChaseDistance = 250
+
+[node name="ChaseAction" type="Node2D" parent="RootBT/SelectorBT/SequenceBT"]
+script = ExtResource("6_8cn0c")
+Speed = 150
+MaxChaseDistance = 250
 
 [node name="SequenceBT2" type="Node2D" parent="RootBT/SelectorBT"]
 script = ExtResource("4_g1rti")
