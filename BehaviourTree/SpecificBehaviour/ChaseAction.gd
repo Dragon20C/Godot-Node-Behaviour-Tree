@@ -1,17 +1,16 @@
 class_name ChaseAction extends NodeBT
 
-@export var NPC : CharacterBody2D
 @export var Speed : int
 @export var MaxChaseDistance : int
-@export var MinChaseDistance : int
 
-func Evaluate(delta: float) -> NodeState:
+func Evaluate(Data : DataTreeClass) -> NodeState:
+	var Actor = Data.Get("Actor")
 	var MousePos = get_global_mouse_position()
 	
-	NPC.velocity = (MousePos - NPC.position).normalized() * Speed
-	NPC.move_and_slide()
+	Actor.velocity = (MousePos - Actor.position).normalized() * Speed
+	Actor.move_and_slide()
 
-	var Distance = NPC.position.distance_to(MousePos)
+	var Distance = Actor.position.distance_to(MousePos)
 	if Distance < 5.0:
 		print("Chase Finished")
 		return NodeState.SUCCESS

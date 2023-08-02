@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cl1ce131i0i4b"]
+[gd_scene load_steps=10 format=3 uid="uid://cl1ce131i0i4b"]
 
 [ext_resource type="Texture2D" uid="uid://0lkqqr82j3in" path="res://icon.svg" id="1_4yjy8"]
 [ext_resource type="Script" path="res://BehaviourTree/RootBT.gd" id="2_qvyuy"]
@@ -7,11 +7,24 @@
 [ext_resource type="Script" path="res://BehaviourTree/SpecificBehaviour/CanChaseCondition.gd" id="5_kkfqi"]
 [ext_resource type="Script" path="res://BehaviourTree/SpecificBehaviour/ChaseAction.gd" id="6_8cn0c"]
 [ext_resource type="Script" path="res://BehaviourTree/SpecificBehaviour/PatrolAction.gd" id="7_jvbg7"]
+[ext_resource type="Script" path="res://BehaviourTree/SpecificBehaviour/ChangeColourAction.gd" id="9_yxacb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6fh2e"]
 size = Vector2(60, 60)
 
 [node name="Enemy" type="CharacterBody2D"]
+
+[node name="SequenceBT" type="Node2D" parent="."]
+script = ExtResource("4_g1rti")
+
+[node name="CanChase" type="Node2D" parent="SequenceBT"]
+script = ExtResource("5_kkfqi")
+MinChaseDistance = 250
+
+[node name="ChaseAction" type="Node2D" parent="SequenceBT"]
+script = ExtResource("6_8cn0c")
+Speed = 150
+MaxChaseDistance = 250
 
 [node name="Icon" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
@@ -26,22 +39,12 @@ script = ExtResource("2_qvyuy")
 [node name="SelectorBT" type="Node2D" parent="RootBT"]
 script = ExtResource("3_a4xdw")
 
-[node name="SequenceBT" type="Node2D" parent="RootBT/SelectorBT"]
+[node name="SequenceBT2" type="Node2D" parent="RootBT/SelectorBT"]
 script = ExtResource("4_g1rti")
 
-[node name="CanChase" type="Node2D" parent="RootBT/SelectorBT/SequenceBT" node_paths=PackedStringArray("NPC")]
-script = ExtResource("5_kkfqi")
-NPC = NodePath("../../../..")
-MinChaseDistance = 200
-
-[node name="ChaseAction" type="Node2D" parent="RootBT/SelectorBT/SequenceBT" node_paths=PackedStringArray("NPC")]
-script = ExtResource("6_8cn0c")
-NPC = NodePath("../../../..")
-Speed = 150
-MaxChaseDistance = 250
-MinChaseDistance = 100
-
-[node name="PatrolAction" type="Node2D" parent="RootBT/SelectorBT" node_paths=PackedStringArray("NPC")]
+[node name="PatrolAction" type="Node2D" parent="RootBT/SelectorBT/SequenceBT2"]
 script = ExtResource("7_jvbg7")
-NPC = NodePath("../../..")
 Speed = 200
+
+[node name="ChangeColourAction" type="Node2D" parent="RootBT/SelectorBT"]
+script = ExtResource("9_yxacb")

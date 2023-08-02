@@ -2,7 +2,6 @@ class_name NodeBT extends Node2D
 
 enum NodeState {RUNNING,SUCCESS,FAILURE}
 var State : NodeState
-var Priority : int = 0
 
-func Evaluate(delta : float) -> NodeState:
+func Evaluate(Data : DataTreeClass) -> NodeState:
 	return NodeState.FAILURE

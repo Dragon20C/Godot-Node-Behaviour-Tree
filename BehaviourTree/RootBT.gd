@@ -1,25 +1,12 @@
 class_name RootBT extends NodeBT
 
-var TreeChildren : Array
+@onready var DataTree = DataTreeClass.new()
 
 func _ready() -> void:
-	TreeChildren = get_children()
+	DataTree.Set("Actor",get_parent())
 
 func _process(delta: float) -> void:
-	State = EvaluateTree(delta)
+	
+	DataTree.Set("delta",delta)
+	self.get_child(0).Evaluate(DataTree)
 
-func EvaluateTree(delta: float) -> NodeState:
-	for child in TreeChildren:
-		var childState = child.Evaluate(delta)
-		
-		match childState:
-			NodeState.FAILURE:
-				return NodeState.FAILURE
-			NodeState.SUCCESS:
-				return NodeState.SUCCESS
-			NodeState.RUNNING:
-				continue
-			_:
-				continue
-				
-	return NodeState.RUNNING

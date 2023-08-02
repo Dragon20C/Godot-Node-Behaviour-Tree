@@ -5,12 +5,10 @@ var SelectorChildren : Array
 
 func _ready() -> void:
 	SelectorChildren = get_children()
-	SelectorChildren.sort_custom(ComparePriority)
-	print(SelectorChildren)
 	
-func Evaluate(delta: float) -> NodeState:
+func Evaluate(Data : DataTreeClass) -> NodeState:
 	for child in SelectorChildren:
-		var childState = child.Evaluate(delta)
+		var childState = child.Evaluate(Data)
 		
 		match childState:
 			NodeState.FAILURE:
@@ -24,6 +22,3 @@ func Evaluate(delta: float) -> NodeState:
 				
 	return NodeState.FAILURE
 
-func ComparePriority(a: Node, b: Node) -> bool:
-	
-	return a.Priority > b.Priority

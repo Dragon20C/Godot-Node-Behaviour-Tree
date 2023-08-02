@@ -14,3 +14,7 @@ config/name="Behaviour Tree"
 run/main_scene="res://Scene/arena.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
 config/icon="res://icon.svg"
+
+[filesystem]
+
+import/blender/enabled=false

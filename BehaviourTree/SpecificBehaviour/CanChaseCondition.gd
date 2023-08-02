@@ -1,13 +1,13 @@
 class_name CanChase extends NodeBT
 
 
-@export var NPC : CharacterBody2D
 @export var MinChaseDistance : int
 
-func Evaluate(delta: float) -> NodeState:
+func Evaluate(Data : DataTreeClass) -> NodeState:
+	var Actor = Data.Get("Actor")
 	var MousePos = get_global_mouse_position()
 	
-	var Distance = NPC.position.distance_to(MousePos)
+	var Distance = Actor.position.distance_to(MousePos)
 	
 	if Distance < MinChaseDistance:
 		State = NodeState.SUCCESS
