@@ -1,4 +1,4 @@
-class_name ChangeColourAction extends NodeBT
+class_name ChangeColourAction extends ActionBT
 
 
 func Evaluate(Data : DataTreeClass) -> NodeState:

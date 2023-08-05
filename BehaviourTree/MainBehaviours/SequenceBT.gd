@@ -1,3 +1,4 @@
+@icon("res://IconSVG/Sequence.svg")
 class_name SequenceBT extends NodeBT
 
 var SequenceChildren : Array
@@ -18,5 +19,6 @@ func Evaluate(Data : DataTreeClass) -> NodeState:
 				return NodeState.RUNNING
 			_:
 				return NodeState.SUCCESS
+				
 
 	return NodeState.RUNNING

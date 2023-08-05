@@ -1,3 +1,4 @@
+@icon("res://IconSVG/Selector.svg")
 class_name SelectorBT extends NodeBT
 
 

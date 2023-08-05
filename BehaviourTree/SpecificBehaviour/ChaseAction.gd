@@ -1,4 +1,4 @@
-class_name ChaseAction extends NodeBT
+class_name ChaseAction extends ActionBT
 
 @export var Speed : int
 @export var MaxChaseDistance : int

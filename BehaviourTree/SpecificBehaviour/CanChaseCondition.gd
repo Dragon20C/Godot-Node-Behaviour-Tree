@@ -1,4 +1,4 @@
-class_name CanChase extends NodeBT
+class_name CanChase extends ConditionBT
 
 
 @export var MinChaseDistance : int

@@ -1,11 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://cl1ce131i0i4b"]
+[gd_scene load_steps=11 format=3 uid="uid://cl1ce131i0i4b"]
 
 [ext_resource type="Texture2D" uid="uid://0lkqqr82j3in" path="res://icon.svg" id="1_4yjy8"]
-[ext_resource type="Script" path="res://BehaviourTree/RootBT.gd" id="2_qvyuy"]
-[ext_resource type="Script" path="res://BehaviourTree/SelectorBT.gd" id="3_a4xdw"]
-[ext_resource type="Script" path="res://BehaviourTree/SequenceBT.gd" id="4_g1rti"]
+[ext_resource type="Script" path="res://BehaviourTree/MainBehaviours/RootBT.gd" id="2_5ydiy"]
+[ext_resource type="Script" path="res://BehaviourTree/MainBehaviours/SelectorBT.gd" id="3_vywjk"]
+[ext_resource type="Script" path="res://BehaviourTree/MainBehaviours/SequenceBT.gd" id="4_hce5n"]
 [ext_resource type="Script" path="res://BehaviourTree/SpecificBehaviour/CanChaseCondition.gd" id="5_kkfqi"]
 [ext_resource type="Script" path="res://BehaviourTree/SpecificBehaviour/ChaseAction.gd" id="6_8cn0c"]
+[ext_resource type="Script" path="res://BehaviourTree/SpecificBehaviour/WaitAction.gd" id="7_ffmdq"]
 [ext_resource type="Script" path="res://BehaviourTree/SpecificBehaviour/PatrolAction.gd" id="7_jvbg7"]
 [ext_resource type="Script" path="res://BehaviourTree/SpecificBehaviour/ChangeColourAction.gd" id="9_yxacb"]
 
@@ -22,13 +23,13 @@ texture = ExtResource("1_4yjy8")
 shape = SubResource("RectangleShape2D_6fh2e")
 
 [node name="RootBT" type="Node2D" parent="."]
-script = ExtResource("2_qvyuy")
+script = ExtResource("2_5ydiy")
 
 [node name="SelectorBT" type="Node2D" parent="RootBT"]
-script = ExtResource("3_a4xdw")
+script = ExtResource("3_vywjk")
 
 [node name="SequenceBT" type="Node2D" parent="RootBT/SelectorBT"]
-script = ExtResource("4_g1rti")
+script = ExtResource("4_hce5n")
 
 [node name="CanChase" type="Node2D" parent="RootBT/SelectorBT/SequenceBT"]
 script = ExtResource("5_kkfqi")
@@ -40,9 +41,12 @@ Speed = 150
 MaxChaseDistance = 250
 
 [node name="SequenceBT2" type="Node2D" parent="RootBT/SelectorBT"]
-script = ExtResource("4_g1rti")
+script = ExtResource("4_hce5n")
 
-[node name="PatrolAction" type="Node2D" parent="RootBT/SelectorBT/SequenceBT2"]
+[node name="WaitAction" type="Node2D" parent="RootBT/SelectorBT/SequenceBT2"]
+script = ExtResource("7_ffmdq")
+
+[node name="PatrolAction" type="Node2D" parent="RootBT/SelectorBT/SequenceBT2/WaitAction"]
 script = ExtResource("7_jvbg7")
 Speed = 200
 

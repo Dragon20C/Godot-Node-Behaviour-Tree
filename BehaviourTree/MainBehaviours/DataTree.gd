@@ -8,6 +8,7 @@ func Get(Key):
 	
 func Set(Key,Value):
 	Data[Key] = Value
+	return Value
 	
 func Has(Key):
 	if Data[Key] != null:
