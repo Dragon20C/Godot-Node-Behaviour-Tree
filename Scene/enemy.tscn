@@ -1,11 +1,13 @@
-[gd_scene load_steps=11 format=3 uid="uid://cl1ce131i0i4b"]
+[gd_scene load_steps=13 format=3 uid="uid://cl1ce131i0i4b"]
 
 [ext_resource type="Texture2D" uid="uid://0lkqqr82j3in" path="res://icon.svg" id="1_4yjy8"]
-[ext_resource type="Script" path="res://BehaviourTree/MainBehaviours/RootBT.gd" id="2_5ydiy"]
-[ext_resource type="Script" path="res://BehaviourTree/MainBehaviours/SelectorBT.gd" id="3_vywjk"]
-[ext_resource type="Script" path="res://BehaviourTree/MainBehaviours/SequenceBT.gd" id="4_hce5n"]
+[ext_resource type="Script" path="res://Scene/enemy.gd" id="1_lnj3l"]
+[ext_resource type="Script" path="res://BehaviourTree/MainBehaviours/BasicNodes/RootBT.gd" id="2_wl084"]
+[ext_resource type="Script" path="res://BehaviourTree/MainBehaviours/BasicNodes/SelectorBT.gd" id="3_mh25d"]
+[ext_resource type="Script" path="res://BehaviourTree/MainBehaviours/BasicNodes/SequenceBT.gd" id="4_sgqne"]
 [ext_resource type="Script" path="res://BehaviourTree/SpecificBehaviour/CanChaseCondition.gd" id="5_kkfqi"]
 [ext_resource type="Script" path="res://BehaviourTree/SpecificBehaviour/ChaseAction.gd" id="6_8cn0c"]
+[ext_resource type="Script" path="res://BehaviourTree/MainBehaviours/Decorators/RepeaterBT.gd" id="6_ajibf"]
 [ext_resource type="Script" path="res://BehaviourTree/SpecificBehaviour/WaitAction.gd" id="7_ffmdq"]
 [ext_resource type="Script" path="res://BehaviourTree/SpecificBehaviour/PatrolAction.gd" id="7_jvbg7"]
 [ext_resource type="Script" path="res://BehaviourTree/SpecificBehaviour/ChangeColourAction.gd" id="9_yxacb"]
@@ -14,6 +16,7 @@
 size = Vector2(60, 60)
 
 [node name="Enemy" type="CharacterBody2D"]
+script = ExtResource("1_lnj3l")
 
 [node name="Icon" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
@@ -23,32 +26,43 @@ texture = ExtResource("1_4yjy8")
 shape = SubResource("RectangleShape2D_6fh2e")
 
 [node name="RootBT" type="Node2D" parent="."]
-script = ExtResource("2_5ydiy")
+script = ExtResource("2_wl084")
 
 [node name="SelectorBT" type="Node2D" parent="RootBT"]
-script = ExtResource("3_vywjk")
+script = ExtResource("3_mh25d")
 
-[node name="SequenceBT" type="Node2D" parent="RootBT/SelectorBT"]
-script = ExtResource("4_hce5n")
+[node name="RepeatPrint" type="Node2D" parent="RootBT/SelectorBT"]
+script = ExtResource("4_sgqne")
 
-[node name="CanChase" type="Node2D" parent="RootBT/SelectorBT/SequenceBT"]
+[node name="RepeaterBT" type="Node2D" parent="RootBT/SelectorBT/RepeatPrint"]
+script = ExtResource("6_ajibf")
+Repetitions = 3
+
+[node name="WaitAction" type="Node2D" parent="RootBT/SelectorBT/RepeatPrint/RepeaterBT"]
+script = ExtResource("7_ffmdq")
+WaitTime = 0.4
+
+[node name="ChangeColourAction" type="Node2D" parent="RootBT/SelectorBT/RepeatPrint/RepeaterBT/WaitAction"]
+script = ExtResource("9_yxacb")
+
+[node name="ChasePlayer" type="Node2D" parent="RootBT/SelectorBT"]
+script = ExtResource("4_sgqne")
+
+[node name="CanChase" type="Node2D" parent="RootBT/SelectorBT/ChasePlayer"]
 script = ExtResource("5_kkfqi")
 MinChaseDistance = 250
 
-[node name="ChaseAction" type="Node2D" parent="RootBT/SelectorBT/SequenceBT"]
+[node name="ChaseAction" type="Node2D" parent="RootBT/SelectorBT/ChasePlayer"]
 script = ExtResource("6_8cn0c")
 Speed = 150
 MaxChaseDistance = 250
 
-[node name="SequenceBT2" type="Node2D" parent="RootBT/SelectorBT"]
-script = ExtResource("4_hce5n")
+[node name="PatrolArea" type="Node2D" parent="RootBT/SelectorBT"]
+script = ExtResource("4_sgqne")
 
-[node name="WaitAction" type="Node2D" parent="RootBT/SelectorBT/SequenceBT2"]
+[node name="WaitAction" type="Node2D" parent="RootBT/SelectorBT/PatrolArea"]
 script = ExtResource("7_ffmdq")
 
-[node name="PatrolAction" type="Node2D" parent="RootBT/SelectorBT/SequenceBT2/WaitAction"]
+[node name="PatrolAction" type="Node2D" parent="RootBT/SelectorBT/PatrolArea/WaitAction"]
 script = ExtResource("7_jvbg7")
 Speed = 200
-
-[node name="ChangeColourAction" type="Node2D" parent="RootBT/SelectorBT"]
-script = ExtResource("9_yxacb")
